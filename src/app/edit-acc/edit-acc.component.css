@@ -1,0 +1,99 @@
+.backgrnd {
+    background-image: url('../../assets/backmanag.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    min-height: 100vh;
+    background-position: center;
+}
+
+.logo_pic img {
+    width: 80px;
+    height: auto;
+    margin-left: 0%;
+
+}
+
+section {
+    width: 100%;
+    height: 35vh;
+}
+
+section nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+    background-color: rgba(255, 255, 255, 0.9);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    
+}
+
+section nav .logo {
+    font-size: 20px;
+    color: #20a0c7;
+    cursor: pointer;
+    position: relative;
+    left: -4%;
+    width: 25%;
+
+
+}
+
+section nav ul {
+    list-style: none;
+    width: 45%;
+    
+}
+
+section nav ul li {
+    display: inline-block;
+    margin: 5px 35px;
+}
+
+section nav ul li a{
+    text-decoration: none;
+    color: black;
+    transition: 0.2s;
+    font-size:medium;
+}
+
+section nav ul li a:hover{
+    color: #20a0c7;
+}
+
+
+table {
+    width: 70%;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #010101;
+}
+
+th {
+    background-color: #f71b1b;
+    color: white;
+}
+
+tr {
+    background-color: #ffffff;
+}
+
+
+tr:hover {
+    background-color: #2338f8;
+}

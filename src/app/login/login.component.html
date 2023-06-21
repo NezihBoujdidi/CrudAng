@@ -1,0 +1,18 @@
+<div class="container">
+  <label for="uname"><b>Username</b></label>
+  <input type="text" [(ngModel)]="username" (ngModelChange)="validateInputs()" placeholder="Enter Username" name="uname" required>
+  
+  <label for="psw"><b>Password</b></label>
+  <input type="password" [(ngModel)]="password" (ngModelChange)="validateInputs()" placeholder="Enter Password" name="psw" required>
+  <button type="submit" (click)="saveData()">
+    LogIn
+  </button>
+  <label>
+    <input type="checkbox" checked="checked" name="remember"> Remember me
+  </label>
+</div>
+  
+<div class="container">
+  <span class="psw"><a href="#">Forgot password?</a></span>
+</div>
+
