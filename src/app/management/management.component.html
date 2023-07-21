@@ -4,15 +4,31 @@
       <div class="logo_pic">
         <img src="assets/logo.png">
       </div>
-
       <ul>
         <li><a routerLink="/management">VIEW LIST</a></li>
         <li><a routerLink="/createAcc">CREATE</a></li>
         <li><a routerLink="/editAcc">EDIT</a></li>
         <li><a routerLink="/deleteAcc">DELETE</a></li>
       </ul>
+      <div class="logOut">
+        <button type="submit" (click)="logoutPop()">
+          <img src="assets/logout.png">Log out
+        </button>
+      </div>
     </nav>
   </section>
+  <div *ngIf="logoutPopUp">
+    <div class="Popup-container">
+      <p>Are you sure you want to log out?</p>
+      <div class="button-container">
+        <button id="confirmButton" (click)="logoutConfirmation()">Confirm</button>
+        <button id="cancelButton" (click)="CancelOper()">Cancel</button>
+      </div>
+    </div>  
+    <div style=" padding: 65px; margin-top: -10px;">
+
+    </div>
+  </div>
   <table>
     <thead>
       <tr>
@@ -21,15 +37,24 @@
         <th>Email</th>
         <th>Password</th>
         <th>Birthday</th>
+        <th>User Picture</th>
       </tr>
     </thead>
     <tbody>
-      <tr  *ngFor="let item of AccTable ">
-        <td>{{ item.FirstName }}</td>
-        <td>{{ item.LastName }}</td>
-        <td>{{ item.Email }}</td>
-        <td>{{ item.Password }}</td>
-        <td>{{ item.Birthday }}</td>
+      <tr *ngFor="let item of AccTable ">
+        <td>{{ item.firstName }}</td>
+        <td>{{ item.lastName }}</td>
+        <td>{{ item.email }}</td>
+        <td>{{ item.password }}</td>
+        <td>{{ item.dob }}</td>
+        <td>
+          <ng-container *ngIf="!item.imageSrc">
+            No image available.
+          </ng-container>
+          <ng-container *ngIf="item.imageSrc">
+            <img [src]="item.imageSrc" alt="User Picture" style="display: block; margin: 0 auto; width: 100px; height: 100px;"/>
+          </ng-container>
+        </td>
       </tr>
     </tbody>
   </table>

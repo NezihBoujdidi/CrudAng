@@ -8,12 +8,12 @@ import { LoginComponent } from './login/login.component';
 import { CommonModule } from '@angular/common';
 import { ManagementComponent } from './management/management.component';
 import { ManagementService } from './management.service';
-import { LogInService } from './log-in.service';
 import { EditAccComponent } from './edit-acc/edit-acc.component';
 import { CreateAccComponent } from './create-acc/create-acc.component';
 import { DeleteAccComponent } from './delete-acc/delete-acc.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,9 +31,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     FormsModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [ManagementService,LogInService],
+  providers: [ManagementService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

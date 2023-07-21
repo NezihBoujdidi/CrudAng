@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 
 interface Account {
-  FirstName: string;
-  LastName: string;
-  Email: any;
-  Password: string;
-  Birthday: string;
+  id : number|null;
+  firstName: string;
+  lastName: string;
+  email: any;
+  password: string;
+  dob: string;
 }
+interface AccountWithImage extends Account {
+  imageId: number;
+}
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManagementService {
-  SelectedAcc: Account | null = null;
+  SelectedAcc: AccountWithImage | null = null;
   private readonly storageKey = 'account';
 
   constructor() { 

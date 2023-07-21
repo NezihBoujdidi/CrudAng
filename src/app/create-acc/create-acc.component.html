@@ -8,66 +8,109 @@
             <ul>
                 <li><a routerLink="/management" (click)="DeleteLoadedAcc()">VIEW LIST</a></li>
                 <li><a routerLink="/createAcc" (click)="DeleteLoadedAcc()">CREATE</a></li>
-                <li><a routerLink="/editAcc"(click)="DeleteLoadedAcc()">EDIT</a></li>
-                <li><a routerLink="/deleteAcc"(click)="DeleteLoadedAcc()">DELETE</a></li>
+                <li><a routerLink="/editAcc" (click)="DeleteLoadedAcc()">EDIT</a></li>
+                <li><a routerLink="/deleteAcc" (click)="DeleteLoadedAcc()">DELETE</a></li>
             </ul>
-
+            <div class="logOut">
+                <button type="submit" (click)="logoutPop()">
+                    <img src="assets/logout.png">Log out
+                </button>
+            </div>
         </nav>
     </section>
+    <div *ngIf="logoutPopUp">
+        <div class="Popup-container">
+            <p>Are you sure you want to log out?</p>
+            <div class="button-container">
+                <button id="confirmButton" (click)="logoutConfirmation()">Confirm</button>
+                <button id="cancelButton" (click)="CancelOper()">Cancel</button>
+            </div>
+        </div>
+        <div style=" padding: 65px; margin-top: -10px;">
+
+        </div>
+    </div>
     <div *ngIf="!OnEditMode()">
         <div class="container">
             <form>
                 <label for="FName">First Name :</label>
-                <input type="text" id="FName" name="FirstName" [(ngModel)]="DataFilled.FirstName" required>
-    
+                <input type="text" id="FName" name="firstName" [(ngModel)]="DataFilled.firstName" required>
+
                 <label for="LName">last Name :</label>
-                <input type="text" id="LName" name="LastName" [(ngModel)]="DataFilled.LastName" required>
-    
+                <input type="text" id="LName" name="lastName" [(ngModel)]="DataFilled.lastName" required>
+
                 <label for="email">Email :</label>
-                <input type="email" id="email" name="Email" [formControl]="DataFilled.Email">
-                <div *ngIf="DataFilled.Email.invalid && (DataFilled.Email.dirty || DataFilled.Email.touched)">
-                    <div class="error-text" *ngIf="DataFilled.Email.errors?.['required']">Email is required.</div>
-                    <div class="error-text" *ngIf="DataFilled.Email.errors?.['pattern']">Invalid email format.</div>
-                </div>
+                <input type="email" id="email" name="email" [(ngModel)]="DataFilled.email"
+                    (ngModelChange)="onEmailChange($event)" required>
+                <div *ngIf="!result && DataFilled.email" class="error-text">Email is invalid.</div>
+                <div *ngIf="emailExistsPop" class="error-text">Email already exists.</div>
+
                 <label for="psw">Password :</label>
-                <input type="password" id="psw" name="psw" [(ngModel)]="DataFilled.Password" required>
-    
+                <input type="password" id="psw" name="psw" [(ngModel)]="DataFilled.password" required>
+
                 <label for="confirmPsw">Confirm Password:</label>
                 <input type="password" id="confirmPsw" name="confirmPsw" [(ngModel)]="confirmPassword" required>
-                <div *ngIf="confirmPassword !== DataFilled.Password" class="error-text">Passwords do not match.</div>
-    
+                <div *ngIf="confirmPassword !== DataFilled.password" class="error-text">Passwords do not match.</div>
+
                 <label for="birthday">Birthday :</label>
-                <input type="date" id="" name="birthday" [(ngModel)]="DataFilled.Birthday" required>
-    
+                <input type="date" id="" name="dob" [(ngModel)]="DataFilled.dob" required>
+
+                <label for="usrPic">Add picture:</label>
+                <input type="file" id="usrPic" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+                <div class="file-upload">
+                    {{fileName || "No file uploaded yet."}}
+                    <button class="upload-btn" (click)="fileUpload.click()">
+                        <span class="material-icons">attach_file</span>
+                    </button>
+                </div>
+                <div style=" padding:20px; margin-top: -10px;">
+
+                </div>
+
                 <button type="submit" (click)="validate()">Create</button>
             </form>
         </div>
     </div>
     <div *ngIf="OnEditMode()">
         <div class="container">
-            <form>   
+            <form>
                 <label for="FName">First Name :</label>
-                <input type="text" id="FName" name="FirstName" [(ngModel)]="OnEditAcc.FirstName" (ngModelChange)="onFirstNameChange($event)" required>
-    
+                <input type="text" id="FName" name="firstName" [(ngModel)]="OnEditAcc.firstName"
+                    (ngModelChange)="onFirstNameChange($event)" required>
+
                 <label for="LName">last Name :</label>
-                <input type="text" id="LName" name="LastName" [(ngModel)]="OnEditAcc.LastName" (ngModelChange)="onLastNameChange($event)" required>
-    
+                <input type="text" id="LName" name="lastName" [(ngModel)]="OnEditAcc.lastName"
+                    (ngModelChange)="onLastNameChange($event)" required>
+
                 <label for="email">Email :</label>
-                <input type="email" id="email" name="Email" [formControl]="DataFilled.Email" [(ngModel)]="OnEditAcc.Email">
-                <div *ngIf="DataFilled.Email.invalid && (DataFilled.Email.dirty || DataFilled.Email.touched)">
-                    <div class="error-text" *ngIf="DataFilled.Email.errors?.['required']">Email is required.</div>
-                    <div class="error-text" *ngIf="DataFilled.Email.errors?.['pattern']">Invalid email format.</div>
-                </div>
+                <input type="email" id="email" name="email" [(ngModel)]="OnEditAcc.email"
+                    (ngModelChange)="onEmailChange($event)" required>
+                <div *ngIf="!result && DataFilled.email" class="error-text">Email is invalid.</div>
+                <div *ngIf="emailExistsPop" class="error-text">Email already exists.</div>
+
                 <label for="psw">Password :</label>
-                <input type="password" id="psw" name="psw" [(ngModel)]="DataFilled.Password" (ngModelChange)="onPasswordChange($event)" required>
-    
+                <input type="password" id="psw" name="psw" [(ngModel)]="DataFilled.password"
+                    (ngModelChange)="onPasswordChange($event)" required>
+
                 <label for="confirmPsw">Confirm Password:</label>
                 <input type="password" id="confirmPsw" name="confirmPsw" [(ngModel)]="confirmPassword" required>
-                <div *ngIf="confirmPassword !== DataFilled.Password" class="error-text">Passwords do not match.</div>
-    
+                <div *ngIf="confirmPassword !== DataFilled.password" class="error-text">Passwords do not match.</div>
+
                 <label for="birthday">Birthday :</label>
-                <input type="date" id="" name="birthday" [(ngModel)]="OnEditAcc.Birthday" (ngModelChange)="onBirthdayChange($event)"required>
-    
+                <input type="date" id="" name="dob" [(ngModel)]="OnEditAcc.dob"
+                    (ngModelChange)="onBirthdayChange($event)" required>
+                <label for="usrPic">Change picture:</label>
+                <input type="file" id="usrPic" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+                <div class="file-upload">
+                    {{fileName || "No file uploaded yet."}}
+                    <button class="upload-btn" (click)="fileUpload.click()">
+                        <span class="material-icons">attach_file</span>
+                    </button>
+                </div>
+                <div style=" padding:20px; margin-top: -10px;">
+
+                </div>
+
                 <button type="submit" (click)="validateEdit()">Save Changes</button>
             </form>
         </div>

@@ -25,7 +25,7 @@ section nav {
     align-items: center;
     justify-content: space-around;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
-    background-color: rgba(255, 255, 255, 0.9); 
+    background-color: rgba(255, 255, 255, 0.9);
     position: fixed;
     top: 0;
     left: 0;
@@ -55,14 +55,14 @@ section nav ul li {
     margin: 5px 35px;
 }
 
-section nav ul li a{
+section nav ul li a {
     text-decoration: none;
     color: black;
     transition: 0.2s;
-    font-size:medium;
+    font-size: medium;
 }
 
-section nav ul li a:hover{
+section nav ul li a:hover {
     color: #20a0c7;
 }
 
@@ -122,6 +122,88 @@ form button:hover {
 
 
 .error-text {
-    color:red;
+    color: red;
     text-transform: uppercase;
+}
+
+.logOut img {
+    width: 35px;
+    height: auto;
+    margin-right: 0%;
+
+}
+
+.logOut button{
+    text-decoration: none;
+    color: black;
+    transition: 0.2s;
+    font-size:medium;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+.file-input {
+
+    display: none;
+
+}
+
+.Popup-container {
+    background-color: #ff0000;
+    border: 1px solid #ffffff;
+    padding: 20px;
+    width: 300px;
+    color: #fff;
+    text-align: center;
+    margin: 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.button-container button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ccc;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.file-upload:hover {
+    background-color: #f7f7f7;
+}
+
+.upload-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.upload-btn:hover {
+    background-color: #0056b3;
+}
+
+.material-icons {
+    font-size: 16px;
+    margin-right: 5px;
 }

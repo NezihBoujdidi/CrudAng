@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
-import { ManagementService } from './management.service';
-import { LogInService } from './log-in.service';
 import { Component, OnInit } from '@angular/core';
+
+
 
 
 @Component({
@@ -12,15 +12,16 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'pageLogIn';
   constructor(
-    private router : Router)
-    { }
+    private router: Router) {
+
+  
+  }
 
   ngOnInit(): void {
     if (!sessionStorage.getItem('currentPage')) {
       sessionStorage.setItem('currentPage', this.router.url);
     }
   }
-
 }
 
 

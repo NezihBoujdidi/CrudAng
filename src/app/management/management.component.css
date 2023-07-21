@@ -14,6 +14,45 @@
 
 }
 
+.logOut img {
+    width: 35px;
+    height: auto;
+    margin-right: 0%;
+
+}
+
+.logOut button{
+    text-decoration: none;
+    color: black;
+    transition: 0.2s;
+    font-size:medium;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+.Popup-container {
+    background-color: #ff0000;
+    border: 1px solid #ffffff;
+    padding: 20px;
+    width: 300px;
+    color: #fff;
+    text-align: center;
+    margin: 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.button-container button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
 section {
     width: 100%;
     height: 35vh;
@@ -67,18 +106,6 @@ section nav ul li a{
 section nav ul li a:hover{
     color: #20a0c7;
 }
-
-/*section nav .icons a{
-    margin: 0 4px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: 0.3s;
-    color:#7a5d31;
-}
-
-section nav .icons a:hover{
-    color: #20a0c7;
-}*/
 
 
 table {

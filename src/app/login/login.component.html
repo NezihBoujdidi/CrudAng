@@ -1,10 +1,12 @@
 <div class="container">
   <label for="uname"><b>Username</b></label>
-  <input type="text" [(ngModel)]="username" (ngModelChange)="validateInputs()" placeholder="Enter Username" name="uname" required>
+  <input type="text" [(ngModel)]="userName" (ngModelChange)="onUsernameChange($event)" placeholder="Enter Username" name="uname" required>
   
   <label for="psw"><b>Password</b></label>
-  <input type="password" [(ngModel)]="password" (ngModelChange)="validateInputs()" placeholder="Enter Password" name="psw" required>
-  <button type="submit" (click)="saveData()">
+  <input type="password" [(ngModel)]="userPass" (ngModelChange)="onPasswordChange($event)" placeholder="Enter Password" name="psw" required>
+  <div *ngIf="wrongCredPop" class="error-text">Invalid username or password.</div>
+
+  <button type="submit" (click)="validateInputs()">
     LogIn
   </button>
   <label>

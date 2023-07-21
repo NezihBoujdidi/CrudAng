@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http'
+import { Observable } from 'rxjs';
 
 interface Account {
-  FirstName: string;
-  LastName: string;
-  Email: any;
-  Password: string;
-  Birthday: string;
+  id : number|null;
+  firstName: string;
+  lastName: string;
+  email: any;
+  password: string;
+  dob: string;
+}
+interface AccountWithImage extends Account {
+  imageId: number;
 }
 
 @Injectable({
@@ -14,60 +20,51 @@ interface Account {
 
 
 export class AccountsListService {
+
+  
   Accounts: Account[] = [];
   private readonly storageKey = 'accountList';
-  constructor() {
-    this.Accounts = [
-      { FirstName: 'Alexandre', LastName: 'Bommarito', Email: 'druzyka@tlbreaksm.com', Password: '@NNHje)', Birthday: '1995-12-05' },
-      { FirstName: 'Brent', LastName: 'Disalvo', Email: 'tjones9114@indonesiaberseri.com', Password: 'ZX8McKI4', Birthday: '1975-08-29' },
-      { FirstName: 'Valentino', LastName: 'Marple', Email: 'kev101@lomaschool.org', Password: '9A^AAXH8', Birthday: '2000-01-13' },
-      { FirstName: 'Beverlee', LastName: 'Gallucci', Email: 'daybad@betmelli20.com', Password: 'CmcRKcLR', Birthday: '1992-04-29' },
-      { FirstName: 'Pernell', LastName: 'Huang', Email: 'mickey936@raanank.com', Password: 'LUS84hg9', Birthday: '1998-07-05' },
-      { FirstName: 'Sandor', LastName: 'Schachter', Email: 'hienlinhpc@jdiwop.com', Password: 'fJGw@wM4', Birthday: '1987-03-16' }
-    ];
-    this.loadAccountsFromSessionStorage();
+  
+  constructor(private http: HttpClient) {}
+
+  getAccounts(): Observable<any>{
+    return this.http.get("http://localhost:8888/api/v1/account");
   }
 
   getAccountData(): Account[] {
     return this.Accounts;
   }
 
-  addAccount(acc: Account) {
-    this.Accounts.push(acc);
-  }
-
-  CreateAccount(FN: string, LN: string, email: any, Pass: string, birthday: string) {
-    const newAccount: Account = {
-      FirstName: FN,
-      LastName: LN,
-      Email: email,
-      Password: Pass,
-      Birthday: birthday,
+  CreateAccount(ide : null |number,FN: string, LN: string, email: any, Pass: string, birthday: string, imageId : number) : Observable<any> {
+    const newAccount: AccountWithImage = {
+      id : ide,
+      firstName: FN,
+      lastName: LN,
+      email: email,
+      password: Pass,
+      dob: birthday,
+      imageId: imageId
     };
 
-    this.addAccount(newAccount);
+    return this.http.post("http://localhost:8888/api/v1/account/saveAcc",newAccount);
   }
 
-  EditAccount(FN: string, LN: string, email: any, Pass: string, birthday: string,index: number){
-    this.Accounts[index].FirstName=FN;
-    this.Accounts[index].LastName=LN;
-    this.Accounts[index].Email=email;
-    this.Accounts[index].Password=Pass;
-    this.Accounts[index].Birthday=birthday;
+  EditAccount(acc: AccountWithImage): Observable<any>{
+    return this.http.put(`http://localhost:8888/api/v1/account/${acc.id}`,acc);
   }
 
-  loadAccountsFromSessionStorage() {
-    const storedAccounts = sessionStorage.getItem(this.storageKey);
-    if (storedAccounts) {
-      this.Accounts = JSON.parse(storedAccounts);
-    }
+  deleteAccount(id : null|number): Observable<any>{
+    return this.http.delete(`http://localhost:8888/api/v1/account/${id}`);
   }
 
-  saveAccountsToSessionStorage() {
-    sessionStorage.setItem(this.storageKey, JSON.stringify(this.Accounts));
+
+  getImage(id : number):Observable<Blob>{
+    return this.http.get(`http://localhost:8888/api/v1/account/getImage/${id}`,{ responseType: 'blob' });
+  }
+
+  deleteImage(id : number): Observable<any> {
+    return this.http.delete(`http://localhost:8888/api/v1/account/deleteImage/${id}`)
   }
 
 
 }
-
-

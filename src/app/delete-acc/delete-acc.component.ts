@@ -1,14 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ManagementService } from '../management.service';
 import { AccountsListService } from '../accounts-list.service';
 import { Router } from '@angular/router';
+import { CredentialslistService } from '../Credentials.service';
 
 interface Account {
-  FirstName: string;
-  LastName: string;
-  Email: any;
-  Password: string;
-  Birthday: string;
+  id: number | null;
+  firstName: string;
+  lastName: string;
+  email: any;
+  password: string;
+  dob: string;
+}
+
+interface AccountWithImage extends Account {
+  imageId: number;
 }
 
 @Component({
@@ -18,43 +24,94 @@ interface Account {
   providers: [ManagementService, AccountsListService]
 })
 export class DeleteAccComponent implements OnInit {
-  AccTable: Account[] = [];
+  @ViewChild('popUpContainer', { static: false })
+  popUpContainer!: ElementRef;
+  AccTable: Array<any> = [];
   popUp: boolean = false;
 
-  OnDeleteAcc: Account = {
-    FirstName: '',
-    LastName: '',
-    Email: '',
-    Password: '',
-    Birthday: ''
-  };
+  OnDeleteAcc: AccountWithImage | null = null;
+  logoutPopUp: boolean = false;
 
   constructor(
     private ManagSvc: ManagementService,
     private AccountsList: AccountsListService,
-    private router : Router
+    private router: Router,
+    private credentialsService: CredentialslistService
   ) { }
 
   ngOnInit(): void {
-    this.AccTable = this.AccountsList.getAccountData();
-    this.popUp=false;
+    this.AccountsList.getAccounts().subscribe((data) => {
+      this.AccTable = data;
+      this.AccTable.forEach((account: any) => {
+        const id = account.imageId;
+        this.AccountsList.getImage(id).subscribe({
+          next: (response: Blob) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              account.imageSrc = reader.result as string;
+            };
+            reader.readAsDataURL(response);
+          },
+          error: (error) => {
+            console.error(error);
+          }
+        }
+        );
+      }
+      );
+    }
+    );
+
+    this.popUp = false;
   }
 
-  DeletePopUp(row: Account) {
+
+  DeletePopUp(row: AccountWithImage) {
     this.ManagSvc.saveSelectedAccountToSessionStorage();
-    this.OnDeleteAcc=row;
+    this.OnDeleteAcc = row;
+    console.log(this.OnDeleteAcc);
     this.popUp = true;
+    if (this.popUpContainer && this.popUpContainer.nativeElement) {
+      setTimeout(() => {
+        setTimeout(() => {
+          this.popUpContainer.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    };
   }
 
   DeleteConfirmation() {
-    const index = this.AccountsList.Accounts.findIndex(acc => acc.FirstName === this.OnDeleteAcc.FirstName && acc.Password === this.OnDeleteAcc.Password);
-    this.AccountsList.Accounts.splice(index,1);
-    this.AccountsList.saveAccountsToSessionStorage();
+    if (this.OnDeleteAcc) {
+      this.AccountsList.deleteAccount(this.OnDeleteAcc.id).subscribe((response) => console.log(response));
+      this.AccountsList.deleteImage(this.OnDeleteAcc.imageId).subscribe((response) => console.log(response));
+    }
     this.router.navigate(['/management']);
   }
 
   CancelOp() {
-    this.popUp=false;
+    this.popUp = false;
+    this.router.navigate(['/deleteAcc']);
+  }
+
+  logoutPop() {
+    this.logoutPopUp = true;
+  }
+
+  logoutConfirmation() {
+    this.credentialsService.logout().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.router.navigate(['/homePage']);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    }
+    );
+  }
+
+  CancelOper() {
+    this.logoutPopUp = false;
     this.router.navigate(['/deleteAcc']);
   }
 }
