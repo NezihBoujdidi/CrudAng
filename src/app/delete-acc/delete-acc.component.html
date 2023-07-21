@@ -50,12 +50,13 @@
                 <td>{{ item.dob }}</td>
                 <td>
                     <ng-container *ngIf="!item.imageSrc">
-                      No image available.
+                        No image available.
                     </ng-container>
                     <ng-container *ngIf="item.imageSrc">
-                      <img [src]="item.imageSrc" alt="User Picture" style="display: block; margin: 0 auto; width: 100px; height: 100px;"/>
+                        <img [src]="item.imageSrc" alt="User Picture"
+                            style="display: block; margin: 0 auto; width: 100px; height: 100px;" />
                     </ng-container>
-                  </td>
+                </td>
                 <td class="deleteButton"><button type="submit" (click)="DeletePopUp(item)">X</button></td>
             </tr>
         </tbody>

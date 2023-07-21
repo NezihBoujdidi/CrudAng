@@ -50,6 +50,7 @@ export class AccountsListService {
   }
 
   EditAccount(acc: AccountWithImage): Observable<any>{
+    console.log(acc)
     return this.http.put(`http://localhost:8888/api/v1/account/${acc.id}`,acc);
   }
 

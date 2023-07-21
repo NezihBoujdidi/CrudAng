@@ -102,7 +102,12 @@
                 <label for="usrPic">Change picture:</label>
                 <input type="file" id="usrPic" class="file-input" (change)="onFileSelected($event)" #fileUpload>
                 <div class="file-upload">
-                    {{fileName || "No file uploaded yet."}}
+                    <div *ngIf="OnEditAcc.imageId!==null">
+                        {{ "Keep same picture or attach a new one."}}
+                    </div>
+                    <div *ngIf="OnEditAcc.imageId==null">
+                        {{fileName || "No file uploaded yet."}}
+                    </div>
                     <button class="upload-btn" (click)="fileUpload.click()">
                         <span class="material-icons">attach_file</span>
                     </button>

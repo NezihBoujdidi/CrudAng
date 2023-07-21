@@ -59,10 +59,11 @@ export class EditAccComponent implements OnInit{
 
 
   routeToEdit(row: AccountWithImage ){
-    this.router.navigate(['/createAcc']);
     this.SelectedRow = row;
     this.ManagSvc.SelectedAcc=this.SelectedRow;
     this.ManagSvc.saveSelectedAccountToSessionStorage();
+    this.router.navigate(['/createAcc']);
+
   }
 
   DeleteLoadedAcc(){

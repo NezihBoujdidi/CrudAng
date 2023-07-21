@@ -34,7 +34,7 @@ export class CreateAccComponent {
     email: '',
     password: '',
     dob: '',
-    imageId : 0
+    imageId : -1
   };
 
   DataFilled: AccountWithImage = {
@@ -44,7 +44,7 @@ export class CreateAccComponent {
     email: '',
     password: '',
     dob: '',
-    imageId : 0
+    imageId : -1
   };
 
   confirmPassword: string = '';
@@ -130,8 +130,8 @@ export class CreateAccComponent {
       if (this.DataFilled.dob == '') {
         this.DataFilled.dob = this.OnEditAcc.dob;
       }
-      if (this.DataFilled.imageId == 0) {
-        this.DataFilled.imageId = this.image_Id;
+      if (this.DataFilled.imageId == -1) {
+        this.DataFilled.imageId = this.OnEditAcc.imageId;
       }
       this.DataFilled.id = this.OnEditAcc.id;
       console.log(this.DataFilled);
@@ -170,7 +170,7 @@ export class CreateAccComponent {
       email: '',
       password: '',
       dob: '',
-      imageId : 0
+      imageId : -1
     };
   }
 
@@ -212,6 +212,7 @@ export class CreateAccComponent {
         upload$.subscribe({
           next: (imageId) => {
             this.image_Id=imageId;
+            this.DataFilled.imageId=this.image_Id;
             console.log('Uploaded image ID:', imageId);
           },
           error: (error) => {
